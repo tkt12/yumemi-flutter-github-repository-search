@@ -1,0 +1,11 @@
+{
+    "@@locale": "ja",
+    "appTitle": "GitHubリポジトリ検索",
+    "@appTitle": {
+        "description": "アプリケーションのタイトル"
+    },
+    "searchHint": "リポジトリを検索",
+    "@searchHint": {
+        "description": "検索入力のヒントテキスト"
+    }
+}
