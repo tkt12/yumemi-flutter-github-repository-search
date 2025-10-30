@@ -1,0 +1,45 @@
+name: yumemi_flutter_github_repository_search
+description: "ゆめみFlutterコーディングテスト - GitHubリポジトリ検索アプリ"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
+  # 状態管理
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+  
+  # データクラス
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+  
+  # API通信
+  dio: ^5.4.3+1
+  
+  # UI
+  intl: ^0.20.2 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  
+  # コード生成
+  build_runner: ^2.4.9
+  riverpod_generator: ^2.4.0
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  
+  # テスト
+  mockito: ^5.4.4
+
+flutter:
+  uses-material-design: true
+  generate: true  # 多言語対応に必要
