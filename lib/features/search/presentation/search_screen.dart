@@ -4,6 +4,7 @@ import '../provider/search_provider.dart';
 import '../provider/search_state.dart';
 import '../widget/search_bar_widget.dart';
 import '../widget/repository_card.dart';
+import '../../repository_detail/presentation/detail_screen.dart';
 
 /// 検索画面
 class SearchScreen extends ConsumerWidget {
@@ -100,8 +101,14 @@ class SearchScreen extends ConsumerWidget {
               return RepositoryCard(
                 repository: repository,
                 onTap: () {
-                  // TODO: 詳細画面への遷移
-                  print('Tapped: ${repository.name}');
+                  // 詳細画面への遷移
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailScreen(repository: repository),
+                    ),
+                  );
                 },
               );
             },
