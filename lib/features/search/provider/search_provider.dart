@@ -6,11 +6,12 @@ import 'search_state.dart';
 part 'search_provider.g.dart';
 
 /// GitHubApiClientのProvider
-@riverpod
-GitHubApiClient gitHubApiClient(ref) {
-  final client = GitHubApiClient();
-  ref.onDispose(() => client.close());
-  return client;
+///
+/// アプリケーション全体で単一のHTTPクライアントを共有するため、
+/// keepAlive: trueを設定してProviderを永続化しています。
+@Riverpod(keepAlive: true)
+GitHubApiClient gitHubApiClient(GitHubApiClientRef ref) {
+  return GitHubApiClient();
 }
 
 /// 検索機能のProvider

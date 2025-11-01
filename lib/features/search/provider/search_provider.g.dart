@@ -6,13 +6,13 @@ part of 'search_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gitHubApiClientHash() => r'9ff955006dc77edd634f30cdf03e53b0234b5c2f';
+String _$gitHubApiClientHash() => r'63cb508fabd4351f0b4859dea6543332b1252b55';
 
 /// GitHubApiClientのProvider
 ///
 /// Copied from [gitHubApiClient].
 @ProviderFor(gitHubApiClient)
-final gitHubApiClientProvider = AutoDisposeProvider<GitHubApiClient>.internal(
+final gitHubApiClientProvider = Provider<GitHubApiClient>.internal(
   gitHubApiClient,
   name: r'gitHubApiClientProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -24,8 +24,8 @@ final gitHubApiClientProvider = AutoDisposeProvider<GitHubApiClient>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef GitHubApiClientRef = AutoDisposeProviderRef<GitHubApiClient>;
-String _$searchNotifierHash() => r'ac7f623e68c0c34b56d5914c0431da4bfd767cb1';
+typedef GitHubApiClientRef = ProviderRef<GitHubApiClient>;
+String _$searchNotifierHash() => r'cb851fe71fff3b6b74ede8f485a5e02c22fa1b4b';
 
 /// 検索機能のProvider
 ///
