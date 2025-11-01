@@ -25,7 +25,6 @@ class GitHubApiClient {
   final Dio _dio;
 
   /// インターセプターの設定
-  /// インターセプターの設定
   void _setupInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
