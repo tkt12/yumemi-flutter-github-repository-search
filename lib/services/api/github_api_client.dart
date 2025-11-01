@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import '../../models/github_repository.dart';
 import 'api_exception.dart';
@@ -8,21 +10,40 @@ class GitHubApiClient {
   GitHubApiClient({
     Dio? dio,
     String? baseUrl,
-  }) : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: baseUrl ?? 'https://api.github.com',
-                connectTimeout: const Duration(seconds: 10),
-                receiveTimeout: const Duration(seconds: 10),
-                headers: {
-                  'Accept': 'application/vnd.github.v3+json',
-                },
-              ),
-            ) {
+  }) : _dio = dio ?? _createDio(baseUrl) {
     _setupInterceptors();
   }
 
   final Dio _dio;
+
+  /// Dioインスタンスを作成
+  static Dio _createDio(String? baseUrl) {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl ?? 'https://api.github.com',
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+        },
+      ),
+    );
+
+    // macOS/iOS用のHTTPアダプター設定
+    if (Platform.isMacOS || Platform.isIOS) {
+      final adapter = dio.httpClientAdapter;
+      if (adapter is IOHttpClientAdapter) {
+        adapter.createHttpClient = () {
+          final httpClient = HttpClient();
+          httpClient.connectionTimeout = const Duration(seconds: 30);
+          httpClient.badCertificateCallback = (cert, host, port) => false;
+          return httpClient;
+        };
+      }
+    }
+
+    return dio;
+  }
 
   /// インターセプターの設定
   void _setupInterceptors() {
@@ -40,8 +61,8 @@ class GitHubApiClient {
           return handler.next(response);
         },
         onError: (error, handler) {
-          // エラーログ（デバッグ時のみ）
-          debugPrint('❌ Error: ${error.response?.statusCode} ${error.message}');
+          // エラーログ
+          debugPrint('API Error: ${error.type} - ${error.message}');
           return handler.next(error);
         },
       ),
