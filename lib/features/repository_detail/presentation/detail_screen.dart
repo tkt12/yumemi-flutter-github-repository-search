@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../models/github_repository.dart';
 import '../../../theme/app_colors.dart';
-import '../provider/detail_provider.dart';
 import '../widget/stat_card.dart';
 import '../widget/info_row.dart';
 
@@ -19,7 +18,6 @@ class DetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final state = ref.watch(detailNotifierProvider(repository));
 
     return Scaffold(
       appBar: AppBar(
@@ -38,22 +36,22 @@ class DetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ヘッダー部分
-            _buildHeader(context, theme, state.repository),
+            _buildHeader(context, theme, repository),
 
             const SizedBox(height: 16),
 
             // 統計情報
-            _buildStats(context, state.repository),
+            _buildStats(context, repository),
 
             const SizedBox(height: 16),
 
             // 詳細情報
-            _buildDetails(context, theme, state.repository),
+            _buildDetails(context, theme, repository),
 
             const SizedBox(height: 16),
 
             // GitHubで開くボタン
-            _buildOpenButton(context, state.repository),
+            _buildOpenButton(context, repository),
 
             const SizedBox(height: 32),
           ],
