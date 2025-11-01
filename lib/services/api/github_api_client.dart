@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../../models/github_repository.dart';
 import 'api_exception.dart';
 
@@ -24,23 +25,24 @@ class GitHubApiClient {
   final Dio _dio;
 
   /// インターセプターの設定
+  /// インターセプターの設定
   void _setupInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // リクエストログ
-          print('🌐 Request: ${options.method} ${options.path}');
+          // リクエストログ（デバッグ時のみ）
+          debugPrint('🌐 Request: ${options.method} ${options.path}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          // レスポンスログ
-          print(
+          // レスポンスログ（デバッグ時のみ）
+          debugPrint(
               '✅ Response: ${response.statusCode} ${response.requestOptions.path}');
           return handler.next(response);
         },
         onError: (error, handler) {
-          // エラーログ
-          print('❌ Error: ${error.response?.statusCode} ${error.message}');
+          // エラーログ（デバッグ時のみ）
+          debugPrint('❌ Error: ${error.response?.statusCode} ${error.message}');
           return handler.next(error);
         },
       ),
