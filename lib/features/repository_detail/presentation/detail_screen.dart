@@ -26,7 +26,7 @@ class DetailScreen extends ConsumerWidget {
           // GitHubで開くボタン
           IconButton(
             icon: const Icon(Icons.open_in_new),
-            onPressed: () => _launchUrl(repository.htmlUrl),
+            onPressed: () => _launchUrl(context, repository.htmlUrl),
             tooltip: 'GitHubで開く',
           ),
         ],
@@ -202,7 +202,7 @@ class DetailScreen extends ConsumerWidget {
             icon: Icons.person,
             label: 'オーナー',
             value: repo.owner.login,
-            onTap: () => _launchUrl(repo.owner.htmlUrl),
+            onTap: () => _launchUrl(context, repo.owner.htmlUrl),
           ),
           const Divider(height: 1, indent: 48),
           InfoRow(
@@ -234,7 +234,7 @@ class DetailScreen extends ConsumerWidget {
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton.icon(
-          onPressed: () => _launchUrl(repo.htmlUrl),
+          onPressed: () => _launchUrl(context, repo.htmlUrl),
           icon: const Icon(Icons.open_in_new),
           label: const Text('GitHubで開く'),
           style: ElevatedButton.styleFrom(
@@ -266,10 +266,30 @@ class DetailScreen extends ConsumerWidget {
   }
 
   /// URLを開く
-  Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+  Future<void> _launchUrl(BuildContext context, String url) async {
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // URLを開けない場合
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('URLを開けませんでした'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      // エラーが発生した場合
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('エラーが発生しました: ${e.toString()}'),
+          duration: const Duration(seconds: 3),
+        ),
+      );
     }
   }
 }
