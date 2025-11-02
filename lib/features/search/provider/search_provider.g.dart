@@ -6,9 +6,12 @@ part of 'search_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gitHubApiClientHash() => r'63cb508fabd4351f0b4859dea6543332b1252b55';
+String _$gitHubApiClientHash() => r'430a768fccc3a3058d967fa6b57ca3bc4e73c62d';
 
 /// GitHubApiClientのProvider
+///
+/// アプリケーション全体で単一のHTTPクライアントを共有するため、
+/// keepAlive: trueを設定してProviderを永続化しています。
 ///
 /// Copied from [gitHubApiClient].
 @ProviderFor(gitHubApiClient)
